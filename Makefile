@@ -17,11 +17,11 @@ install:htcnetup
 	
 	@if [ -d $(INSTDIR) ]; \
 	then \
-	echo “If your {idProduct} is not "0fb4", Please change it in 49-htcpnet.rules first.”; \
+	echo “If your {idProduct} is not "0fb4", Please change it in 49-htcnet.rules first.”; \
 	echo “If your phone_usb_device is not "usb0", Please change it in htcnet.sh first.”; \
 	cp htcnetup $(INSTDIR);\
 	cp htcnet.sh $(INSTDIR);\
-	cp 49-htcpnet.rules /etc/udev/rules.d;\
+	cp 49-htcnet.rules /etc/udev/rules.d;\
 	chmod a+x $(INSTDIR)/htcnetup;\
 	chmod a+x $(INSTDIR)/htcnet.sh;\
 	echo “Installed in $(INSTDIR)“;\
@@ -44,11 +44,11 @@ uninstall:
 	else \
 	echo “Sorry, $(INSTDIR)/htcnet.sh does not exist”;\
 	fi
-	@if [ -f /etc/udev/rules.d/49-htcpnet.rules ]; \
+	@if [ -f /etc/udev/rules.d/49-htcnet.rules ]; \
 	then \
-	rm /etc/udev/rules.d/49-htcpnet.rules;\
-	echo “/etc/udev/rules.d/49-htcpnet.rules is deleted.”;\
+	rm /etc/udev/rules.d/49-htcnet.rules;\
+	echo “/etc/udev/rules.d/49-htcnet.rules is deleted.”;\
 	else \
-	echo “Sorry, /etc/udev/rules.d/49-htcpnet.rules does not exist”;\
+	echo “Sorry, /etc/udev/rules.d/49-htcnet.rules does not exist”;\
 	fi
 
