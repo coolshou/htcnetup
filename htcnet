@@ -1,14 +1,42 @@
-#!/bin/bash
+#! /bin/sh
+#
+### BEGIN INIT INFO
+# Provides:          htcnet
+# Required-Start:    $syslog $local_fs $remote_fs
+# Required-Stop:     $syslog $local_fs $remote_fs
+# Should-Start:      dbus avahi-daemon
+# Should-Stop:       dbus avahi-daemon
+# Default-Start:     2 3 4 5
+# Default-Stop:      1
+# Short-Description: HTC phone USB network 
+# Description:       htcnet makes HTC phone work with USB
+#                    network.
+### END INIT INFO
 #
 #htcnet.sh
 #LuoXiaoqiu <qilvilu@gmail.com>
 #An activater for HTC android phone Internet pass-through.
 #
 
+NAME=htcnet
+
+. /lib/lsb/init-functions
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# Include htcnet defaults if available
+if [ -f /etc/default/htcnet ] ; then
+    . /etc/default/htcnet
+fi
+
+if [ "x$RUN" != "xyes" ] ; then
+    log_success_msg "$NAME disabled; edit /etc/default/htcnet"
+    exit 0
+fi
 #PC's internet interface
-pc_internet_device="eth0"
+pc_internet_device="$IF_NET"
 #phone's connection  interface in pc
-phone_usb_device="usb0"
+phone_usb_device="$IF_USB"
 
 logger "###### 1: $1 ######################## 2: $2 ##########################"
 
@@ -20,8 +48,12 @@ case "$1" in
 	;;
 	"--add")
 	logger "############################## arg2: $2"
-
 	;;
+	*)
+	N=/etc/init.d/$NAME
+	log_failure_msg "Usage: $N {--add|--remove}"
+	exit 1
+	;;	
 esac
 
 get_ip ()

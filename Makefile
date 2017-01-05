@@ -19,30 +19,38 @@ install:htcnetup
 	then \
 	echo “If your {idProduct} is not "0fb4", Please change it in 49-htcnet.rules first.”; \
 	echo “If your phone_usb_device is not "usb0", Please change it in htcnet.sh first.”; \
-	cp htcnetup $(INSTDIR);\
-	cp htcnet.sh $(INSTDIR);\
+	cp htcnetup $(INSTDIR)/usr/bin/;\
+	cp htcnet $(INSTDIR)/etc/init.d/;\
+	cp conf/htcnet /etc/default/;\
 	cp 49-htcnet.rules /etc/udev/rules.d;\
 	chmod a+x $(INSTDIR)/htcnetup;\
-	chmod a+x $(INSTDIR)/htcnet.sh;\
+	chmod a+x $(INSTDIR)/etc/init.d/htcnet;\
 	echo “Installed in $(INSTDIR)“;\
 	else \
 	echo “Sorry, $(INSTDIR) does not exist”;\
 	fi 
 
 uninstall:
-	@if [ -f $(INSTDIR)/htcnetup ]; \
+	@if [ -f $(INSTDIR)/usr/bin/htcnetup ]; \
 	then \
-	rm $(INSTDIR)/htcnetup;\
-	echo “$(INSTDIR)/htcnetup is deleted.”;\
+	rm $(INSTDIR)/usr/bin/htcnetup;\
+	echo “$(INSTDIR)/usr/bin/htcnetup is deleted.”;\
 	else \
-	echo “Sorry, $(INSTDIR)/htcnetup does not exist”;\
+	echo “Sorry, $(INSTDIR)/usr/bin/htcnetup does not exist”;\
 	fi
-	@if [ -f $(INSTDIR)/htcnet.sh ]; \
+	@if [ -f $(INSTDIR)/etc/init.d/htcnet ]; \
 	then \
-	rm $(INSTDIR)/htcnet.sh;\
-	echo “$(INSTDIR)/htcnet.sh is deleted.”;\
+	rm $(INSTDIR)/etc/init.d/htcnet;\
+	echo “$(INSTDIR)/etc/init.d/htcnet is deleted.”;\
 	else \
-	echo “Sorry, $(INSTDIR)/htcnet.sh does not exist”;\
+	echo “Sorry, $(INSTDIR)/etc/init.d/htcnet does not exist”;\
+	fi
+	@if [ -f /etc/default/htcnet ]; \
+	then \
+	rm /etc/default/htcnet;\
+	echo “/etc/default/htcnet is deleted.”;\
+	else \
+	echo “Sorry, /etc/default/htcnet does not exist”;\
 	fi
 	@if [ -f /etc/udev/rules.d/49-htcnet.rules ]; \
 	then \
